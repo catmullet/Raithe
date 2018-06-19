@@ -43,3 +43,28 @@
     "success": true
 }
 ```
+### Pop Message
+---
+#### Request
+```json
+{
+	"queue":"enrollment",
+	"security_token": {
+        "agent_name": "basic",
+        "token": "{{token}}"
+    }
+}
+```
+#### Response
+```json
+{
+    "queue": "enrollment",
+    "body": {
+        "message": "Hello World",
+        "queue": "enrollment",
+        "security_token": {
+            "agent_name": "basic",
+            "token": "{{token}}"
+        }
+    }
+}
