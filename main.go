@@ -10,16 +10,17 @@ import (
 )
 
 func main() {
+	gotenv.Load("env")
 	fmt.Println(utils.Intro)
-	fmt.Println(utils.Hr)
+	fmt.Println(fmt.Sprintf("Raithe Messenging Service has started on port : %v", os.Getenv("PORT")))
 
 	startServer()
 }
 
 func startServer() {
-	gotenv.Load("env")
 	server := echo.New()
 	server.HideBanner = true
+	server.HidePort = true
 	queue.Routes(server)
 	server.Logger.Fatal(server.Start(":" + os.Getenv("PORT")))
 }
