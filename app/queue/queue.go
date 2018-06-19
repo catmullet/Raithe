@@ -23,7 +23,7 @@ type PushResponse struct {
 
 type PopResponse struct {
 	Queue string `json:"queue"`
-	Message interface{} `json:"message"`
+	Body interface{} `json:"body"`
 }
 
 func PushToQueue(msg Message) error {

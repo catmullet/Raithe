@@ -47,7 +47,7 @@ func Pop(ctx echo.Context) error {
 
 	json.Unmarshal(msg, &data)
 
-	resp := queue.PopResponse{Message:data, Queue:req.Queue}
+	resp := queue.PopResponse{Body:data, Queue:req.Queue}
 
 	if err != nil {
 		return err
