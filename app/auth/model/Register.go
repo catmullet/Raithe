@@ -9,6 +9,10 @@ type SecurityToken struct {
 	Token string `json:"token"`
 }
 
+type InvalidateTokens struct {
+	Token SecurityToken `json:"security_token"`
+}
+
 type RegisterResponse struct {
 	Success bool `json:"success"`
 	Message string `json:"message"`
