@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"path/filepath"
 	"strconv"
+	"io"
 )
 
 func Set(key string, message []byte) error {
@@ -25,27 +26,22 @@ func writeFile(key string, message []byte) error {
 
 func readFile(key string) ([]byte, error) {
 	rootPath := os.Getenv("ROOTPATH")
-	f, err := os.Open(rootPath + string(filepath.Separator) + key + string(filepath.Separator))
-	if err != nil {
-		fmt.Println(err)
-	}
+	msg := []byte{}
 
-	files, err := f.Readdir(-1)
-	defer f.Close()
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	if len(files) > 0 {
-		msg, err := ioutil.ReadFile(rootPath + string(filepath.Separator) + key + string(filepath.Separator) + files[0].Name())
-		if err != nil {
-			fmt.Println(err)
+	filepath.Walk(rootPath + string(filepath.Separator) + key + string(filepath.Separator), func(path string, f os.FileInfo, err error) error {
+		if !f.IsDir() {
+			m, err := ioutil.ReadFile(path)
+			if err != nil {
+				fmt.Println(err)
+			}
+			os.Remove(path)
+			msg = m
+			return io.EOF
 		}
-		os.Remove(rootPath + string(filepath.Separator) + key + string(filepath.Separator) + files[0].Name())
-		return msg, err
-	}
+		return nil
+	})
 
-	return []byte(""), err
+	return msg, nil
 }
 
 func createDirectory(key string) {
