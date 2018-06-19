@@ -1,0 +1,106 @@
+{
+	"info": {
+		"name": "Raithe",
+		"_postman_id": "049fee05-1159-d3c7-ce35-9803db69d700",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Queue",
+			"description": "",
+			"item": [
+				{
+					"name": "Push Message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"queue\":\"enrollment\",\n\t\"message\":\"Hello World\",\n\t\"security_token\": {\n        \"agent_name\": \"basic\",\n        \"token\": \"{{token}}\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{raithe}}/queue/push",
+							"host": [
+								"{{raithe}}"
+							],
+							"path": [
+								"queue",
+								"push"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Pop Message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"queue\":\"enrollment\",\n\t\"security_token\": {\n        \"agent_name\": \"basic\",\n        \"token\": \"{{token}}\"\n    }\n}"
+						},
+						"url": {
+							"raw": "{{raithe}}/queue/pop",
+							"host": [
+								"{{raithe}}"
+							],
+							"path": [
+								"queue",
+								"pop"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Register",
+			"description": "",
+			"item": [
+				{
+					"name": "Register Client",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"agent_name\":\"basic\"\n}"
+						},
+						"url": {
+							"raw": "{{raithe}}/auth/register",
+							"host": [
+								"{{raithe}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
