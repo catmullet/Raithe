@@ -1,5 +1,4 @@
-<div style="width:500px; background-image:url(https://images.pexels.com/photos/414171/pexels-photo-414171.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260)">
-<img src="https://github.com/catmullet/Raithe/blob/master/Raithe_md.png" width="250"/>
-  </div>
+
+<img src="https://github.com/catmullet/Raithe/blob/master/image%20(1).jpg" width="100%"/>
 
 Lightweight Simple Messaging Queue
