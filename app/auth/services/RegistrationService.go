@@ -72,12 +72,6 @@ func GeneratePrivateKey() (string, error) {
 	if err != nil {
 		return "", err
 	}
-
-	// Validate Private Key
-	err = privateKey.Validate()
-	if err != nil {
-		return "", err
-	}
 	return fmt.Sprintf("%x", privateKey.D.Bytes()), nil
 }
 
@@ -92,11 +86,32 @@ func IsAgentRegistered(token model.SecurityToken) bool {
 }
 
 func InvalidateTokens(ctx echo.Context) error {
+	inv := model.InvalidateTokens{}
+	err := ctx.Bind(&inv)
+
+	if err != nil {
+		return err
+	}
+
+	if !IsAgentRegistered(inv.Token){
+		return ctx.JSON(403, model.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
+	}
 	RegisteredAgents = []model.SecurityToken{}
 	return ctx.JSON(200, "Invalidated Tokens")
 }
 
 func DumpTokens(ctx echo.Context) error {
+	inv := model.InvalidateTokens{}
+	err := ctx.Bind(&inv)
+
+	if err != nil {
+		return err
+	}
+
+	if !IsAgentRegistered(inv.Token){
+		return ctx.JSON(403, model.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
+	}
+
 	for _, val := range RegisteredAgents {
 		fmt.Println(val)
 	}
