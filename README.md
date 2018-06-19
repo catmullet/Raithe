@@ -1,6 +1,6 @@
 ![Raithe](https://github.com/catmullet/Raithe/blob/master/image%20(1).jpg)
 
-# _Lightweight | Persistent | Fast | Simple - Messaging Queue_
+# _The Compact and Persistent Messaging Queue_
 ## Getting Started
 #### Modifying your env file
 Your env file simply contains the port you want to run from and the root path of where the persistent storage will be.
