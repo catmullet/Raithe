@@ -17,7 +17,7 @@ Contained within the root directory is a file agents_list.json.  This file conta
 #### Request
 ```json
 {
-	"agent_name":"basic"
+	"agent_name":"{{agent name}}"
 }
 ```
 #### Response
@@ -26,7 +26,7 @@ Contained within the root directory is a file agents_list.json.  This file conta
     "success": true,
     "message": "",
     "security_token": {
-        "agent_name": "basic",
+        "agent_name": "{{agent name}}",
         "token": "{{token}}"
     }
 }
@@ -40,7 +40,7 @@ Pusing a message can be done by any agent.  Queues are the key and will be how a
 	"queue":"enrollment",
 	"message":"Hello World",
 	"security_token": {
-        "agent_name": "basic",
+        "agent_name": "{{agent name}}",
         "token": "{{token}}"
     }
 }
@@ -58,7 +58,7 @@ Popping a message from the queue will grab the oldest message first.  Simple as 
 {
 	"queue":"enrollment",
 	"security_token": {
-        "agent_name": "basic",
+        "agent_name": "{{agent name}}",
         "token": "{{token}}"
     }
 }
@@ -71,7 +71,7 @@ Popping a message from the queue will grab the oldest message first.  Simple as 
         "message": "Hello World",
         "queue": "enrollment",
         "security_token": {
-            "agent_name": "basic",
+            "agent_name": "{{agent name}}",
             "token": "{{token}}"
         }
     }
