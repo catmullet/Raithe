@@ -1,7 +1,7 @@
 package queue
 
 import (
-	"github.com/kyani-inc/Raithe/app/store"
+	"github.com/catmullet/Raithe/app/store"
 	"github.com/gin-gonic/gin/json"
 )
 

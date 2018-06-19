@@ -2,8 +2,7 @@ package queue
 
 import (
 	"github.com/labstack/echo"
-	"github.com/kyani-inc/Raithe/app/queue"
-	"luckydinedashboard/app"
+	"github.com/catmullet/Raithe/app/queue"
 	"fmt"
 	"encoding/json"
 )
@@ -18,7 +17,7 @@ func Push(ctx echo.Context) error {
 	}
 
 	go queue.PushToQueue(msg)
-	return app.Success(ctx, queue.PushResponse{true})
+	return ctx.JSON(200, queue.PushResponse{true})
 }
 
 func Pop(ctx echo.Context) error {
@@ -36,5 +35,5 @@ func Pop(ctx echo.Context) error {
 		return err
 	}
 
-	return app.Success(ctx, resp)
+	return ctx.JSON(200, resp)
 }

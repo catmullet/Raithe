@@ -4,7 +4,7 @@ import (
 	"github.com/subosito/gotenv"
 	"github.com/labstack/echo"
 	"os"
-	"github.com/kyani-inc/Raithe/api/queue"
+	"github.com/catmullet/Raithe/api/queue"
 )
 
 func main() {
