@@ -1,11 +1,12 @@
 ![Raithe](https://github.com/catmullet/Raithe/blob/master/image%20(1).jpg)
 
-# Raithe
----
 ## Lightweight | Persistent | Fast | Simple - Messaging Queue
 
 ### Register Clients
 ---
+A Client is any service attempting to push or pop from the message queue.  
+Contained within the root directory is a file agents_list.json.  This file contains all the agents that can register and is read in realtime.  So Adding an agent is easy.
+
 #### Request
 ```json
 {
@@ -26,6 +27,7 @@
 
 ### Push Message
 ---
+Pusing a message can be done by any agent.  Queues are the key and will be how agents identify which queue to pull from.
 #### Request
 ```json
 {
@@ -45,6 +47,7 @@
 ```
 ### Pop Message
 ---
+Popping a message from the queue will grab the oldest message first.  Simple as that.
 #### Request
 ```json
 {
