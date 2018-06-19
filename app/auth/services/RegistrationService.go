@@ -15,7 +15,7 @@ var (
 )
 
 func getAgents() model.Agents {
-	raw, err := ioutil.ReadFile("Auth/agents_list.json")
+	raw, err := ioutil.ReadFile("./agents_list.json")
 
 	if err != nil {
 		fmt.Println(err)
