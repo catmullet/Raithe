@@ -29,6 +29,7 @@ func readFile(key string) ([]byte, error) {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	files, err := f.Readdir(-1)
 	defer f.Close()
 	if err != nil {
@@ -37,13 +38,10 @@ func readFile(key string) ([]byte, error) {
 
 	if len(files) > 0 {
 		msg, err := ioutil.ReadFile(rootPath + string(filepath.Separator) + key + string(filepath.Separator) + files[0].Name())
-
 		if err != nil {
 			fmt.Println(err)
 		}
-
 		os.Remove(rootPath + string(filepath.Separator) + key + string(filepath.Separator) + files[0].Name())
-
 		return msg, err
 	}
 

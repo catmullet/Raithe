@@ -24,7 +24,6 @@ func PushToQueue(msg Message) error {
 
 	err := store.Set(msg.Queue, byteSlice)
 	return err
-
 }
 
 func GetFromQueue(queue string) ([]byte, error) {
