@@ -1,7 +1,16 @@
 ![Raithe](https://github.com/catmullet/Raithe/blob/master/image%20(1).jpg)
 
-## Lightweight | Persistent | Fast | Simple - Messaging Queue
+# _Lightweight | Persistent | Fast | Simple - Messaging Queue_
+---
+## Getting Started
+#### Modifying your env file
+Your env file simply contains the port you want to run from and the root path of where the persistent storage will be.
+```json
+PORT=8021
+ROOTPATH="q"
+```
 
+## Playing Around
 ### Register Clients
 ---
 A Client is any service attempting to push or pop from the message queue.  
