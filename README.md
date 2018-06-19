@@ -2,5 +2,5 @@
 
 Raithe
 ---
-Lightweight Simple Messaging Queue
+Lightweight | Persistent | Fast | Simple - Messaging Queue
 
