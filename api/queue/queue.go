@@ -5,8 +5,8 @@ import (
 	"github.com/catmullet/Raithe/app/queue"
 	"fmt"
 	"encoding/json"
-	"github.com/catmullet/Raithe/Auth/Models"
-	"github.com/catmullet/Raithe/Auth/Services"
+	"github.com/catmullet/Raithe/app/auth/model"
+	"github.com/catmullet/Raithe/app/auth/services"
 )
 
 func Push(ctx echo.Context) error {
@@ -19,8 +19,8 @@ func Push(ctx echo.Context) error {
 		fmt.Println(err)
 	}
 
-	if !Services.IsAgentRegistered(msg.Token){
-		return ctx.JSON(403, Models.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
+	if !services.IsAgentRegistered(msg.Token){
+		return ctx.JSON(403, model.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
 	}
 
 	go queue.PushToQueue(msg)
@@ -37,8 +37,8 @@ func Pop(ctx echo.Context) error {
 		fmt.Println(err)
 	}
 
-	if !Services.IsAgentRegistered(req.Token){
-		return ctx.JSON(403, Models.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
+	if !services.IsAgentRegistered(req.Token){
+		return ctx.JSON(403, model.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
 	}
 
 	msg, err := queue.GetFromQueue(req.Queue)

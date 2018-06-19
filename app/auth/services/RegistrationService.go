@@ -1,9 +1,9 @@
-package Services
+package services
 
 import (
 	"github.com/labstack/echo"
 	"encoding/json"
-	"github.com/catmullet/Raithe/Auth/Models"
+	"github.com/catmullet/Raithe/app/auth/model"
 	"fmt"
 	"io/ioutil"
 	"crypto/rand"
@@ -11,24 +11,24 @@ import (
 )
 
 var (
-	RegisteredAgents []Models.SecurityToken
+	RegisteredAgents []model.SecurityToken
 )
 
-func getAgents() Models.Agents {
+func getAgents() model.Agents {
 	raw, err := ioutil.ReadFile("Auth/agents_list.json")
 
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	var agents Models.Agents
+	var agents model.Agents
 	json.Unmarshal(raw, &agents)
 
 	return agents
 }
 
 func RegisterAsAgent(ctx echo.Context) error {
-	reg := Models.Register{}
+	reg := model.Register{}
 	err := json.NewDecoder(ctx.Request().Body).Decode(&reg)
 
 	if err != nil {
@@ -38,21 +38,21 @@ func RegisterAsAgent(ctx echo.Context) error {
 	agents := getAgents()
 
 	if isAlreadyRegistered(reg.AgentName) {
-		return ctx.JSON(200, Models.RegisterResponse{Success:false, Message:"Agent is already Registered"})
+		return ctx.JSON(200, model.RegisterResponse{Success:false, Message:"Agent is already Registered"})
 	}
 
 	for _, val := range agents.Agents {
 		if val == reg.AgentName {
 			token, _ := GeneratePrivateKey()
 
-			secToken := Models.SecurityToken{AgentName:reg.AgentName,Token:token}
+			secToken := model.SecurityToken{AgentName:reg.AgentName,Token:token}
 			RegisteredAgents = append(RegisteredAgents, secToken)
 
-			return ctx.JSON(200, Models.RegisterResponse{Success:true, SecurityToken:secToken})
+			return ctx.JSON(200, model.RegisterResponse{Success:true, SecurityToken:secToken})
 		}
 	}
 
-	return ctx.JSON(200, Models.RegisterResponse{Success:false,Message:"Unrecognized Agent"})
+	return ctx.JSON(200, model.RegisterResponse{Success:false,Message:"Unrecognized Agent"})
 }
 
 
@@ -81,7 +81,7 @@ func GeneratePrivateKey() (string, error) {
 	return fmt.Sprintf("%x", privateKey.D.Bytes()), nil
 }
 
-func IsAgentRegistered(token Models.SecurityToken) bool {
+func IsAgentRegistered(token model.SecurityToken) bool {
 
 	for _, val := range RegisteredAgents {
 		if val.Token == token.Token && val.AgentName == token.AgentName {
@@ -92,7 +92,7 @@ func IsAgentRegistered(token Models.SecurityToken) bool {
 }
 
 func InvalidateTokens(ctx echo.Context) error {
-	RegisteredAgents = []Models.SecurityToken{}
+	RegisteredAgents = []model.SecurityToken{}
 	return ctx.JSON(200, "Invalidated Tokens")
 }
 

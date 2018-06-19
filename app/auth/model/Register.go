@@ -1,4 +1,4 @@
-package Models
+package model
 
 type Register struct {
 	AgentName string `json:"agent_name"`

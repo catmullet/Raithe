@@ -3,18 +3,18 @@ package queue
 import (
 	"github.com/catmullet/Raithe/app/store"
 	"github.com/gin-gonic/gin/json"
-	"github.com/catmullet/Raithe/Auth/Models"
+	"github.com/catmullet/Raithe/app/auth/model"
 )
 
 type Message struct {
-	Queue string `json:"queue"`
-	Message interface{} `json:"message"`
-	Token Models.SecurityToken `json:"security_token"`
+	Queue   string              `json:"queue"`
+	Message interface{}         `json:"message"`
+	Token   model.SecurityToken `json:"security_token"`
 }
 
 type PopRequest struct {
-	Queue string `json:"queue"`
-	Token Models.SecurityToken `json:"security_token"`
+	Queue string              `json:"queue"`
+	Token model.SecurityToken `json:"security_token"`
 }
 
 type PushResponse struct {

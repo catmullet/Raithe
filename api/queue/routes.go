@@ -2,7 +2,7 @@ package queue
 
 import (
 	"github.com/labstack/echo"
-	"github.com/catmullet/Raithe/Auth/Services"
+	"github.com/catmullet/Raithe/app/auth/services"
 )
 
 func Routes(e *echo.Echo) {
@@ -13,7 +13,7 @@ func Routes(e *echo.Echo) {
 
 	auth := e.Group("/auth")
 
-	auth.GET("/dump_tokens", Services.DumpTokens)
-	auth.DELETE("/invalidate_tokens", Services.InvalidateTokens)
-	auth.POST("/register", Services.RegisterAsAgent)
+	auth.GET("/dump_tokens", services.DumpTokens)
+	auth.DELETE("/invalidate_tokens", services.InvalidateTokens)
+	auth.POST("/register", services.RegisterAsAgent)
 }
