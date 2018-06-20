@@ -67,12 +67,5 @@ Popping a message from the queue will grab the oldest message first.  Simple as 
 ```json
 {
     "queue": "enrollment",
-    "body": {
-        "message": "Hello World",
-        "queue": "enrollment",
-        "security_token": {
-        	"agent_name": "{{agent name}}",
-        	"token": "{{token}}"
-        }
-    }
+    "message": "Hello World"
 }
