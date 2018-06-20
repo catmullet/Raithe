@@ -43,11 +43,11 @@ func Pop(ctx echo.Context) error {
 
 	msg, err := queue.GetFromQueue(req.Queue)
 
-	var data map[string]interface{}
+	data := queue.Message{}
 
 	json.Unmarshal(msg, &data)
 
-	resp := queue.PopResponse{Body:data, Queue:req.Queue}
+	resp := queue.PopResponse{Message:data.Message, Queue:req.Queue}
 
 	if err != nil {
 		return err
