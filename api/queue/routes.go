@@ -5,7 +5,7 @@ import (
 	"github.com/labstack/echo"
 )
 
-/* Routes contains the echo routes */
+/* Routes ... Contains the echo routes */
 func Routes(e *echo.Echo) {
 	g := e.Group("/queue")
 
