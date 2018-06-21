@@ -9,7 +9,7 @@ import (
 	"github.com/labstack/echo"
 )
 
-/*  Pushes message to specified queue. Requires security token. */
+/*  Push pushes message to specified queue. Requires security token. */
 func Push(ctx echo.Context) error {
 
 	msg := types.Message{}
@@ -28,7 +28,7 @@ func Push(ctx echo.Context) error {
 	return ctx.JSON(200, types.PushResponse{true})
 }
 
-/* Pops message from specified queue.  Requires security token. */
+/* Pop pops message from specified queue.  Requires security token. */
 func Pop(ctx echo.Context) error {
 
 	req := types.PopRequest{}
@@ -58,7 +58,7 @@ func Pop(ctx echo.Context) error {
 	return ctx.JSON(200, resp)
 }
 
-/* Function to push message to queue */
+/* PushToQueue pushes message to queue */
 func PushToQueue(msg types.Message) error {
 	byteSlice, _ := json.Marshal(msg)
 
@@ -66,7 +66,7 @@ func PushToQueue(msg types.Message) error {
 	return err
 }
 
-/* Function to pop message to queue */
+/* GetFromQueue pops message from queue */
 func GetFromQueue(queue string) ([]byte, error) {
 	return cache.Get(queue)
 }
