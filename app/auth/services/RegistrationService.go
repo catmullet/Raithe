@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"github.com/catmullet/Raithe/app/auth/model"
 	"fmt"
-	"io/ioutil"
 	"crypto/rand"
 	"crypto/rsa"
+	"github.com/catmullet/Raithe/app/utils"
 )
 
 var (
@@ -15,16 +15,7 @@ var (
 )
 
 func getAgents() model.Agents {
-	raw, err := ioutil.ReadFile("./agents_list.json")
-
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	var agents model.Agents
-	json.Unmarshal(raw, &agents)
-
-	return agents
+	return utils.GetAgentsFromList()
 }
 
 func RegisterAsAgent(ctx echo.Context) error {

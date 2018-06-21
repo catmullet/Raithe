@@ -2,10 +2,10 @@ package queue
 
 import (
 	"github.com/labstack/echo"
-	"github.com/catmullet/Raithe/app/queue"
+	queue "github.com/catmullet/Raithe/app/queue/model"
 	"fmt"
 	"encoding/json"
-	"github.com/catmullet/Raithe/app/auth/model"
+	auth "github.com/catmullet/Raithe/app/auth/model"
 	"github.com/catmullet/Raithe/app/auth/services"
 )
 
@@ -20,7 +20,7 @@ func Push(ctx echo.Context) error {
 	}
 
 	if !services.IsAgentRegistered(msg.Token){
-		return ctx.JSON(403, model.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
+		return ctx.JSON(403, auth.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
 	}
 
 	go queue.PushToQueue(msg)
@@ -38,7 +38,7 @@ func Pop(ctx echo.Context) error {
 	}
 
 	if !services.IsAgentRegistered(req.Token){
-		return ctx.JSON(403, model.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
+		return ctx.JSON(403, auth.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
 	}
 
 	msg, err := queue.GetFromQueue(req.Queue)

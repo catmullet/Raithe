@@ -1,4 +1,4 @@
-package queue
+package model
 
 import (
 	"github.com/catmullet/Raithe/app/store"
