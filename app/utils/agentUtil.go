@@ -3,16 +3,16 @@ package utils
 import (
 	"fmt"
 	"io/ioutil"
-	"github.com/catmullet/Raithe/app/auth/model"
 	"encoding/json"
+	"github.com/catmullet/Raithe/app/types"
 )
 
-func GetAgentsFromList() model.Agents {
+func GetAgentsFromList() types.Agents {
 	raw, err := ioutil.ReadFile(`./agents_list.json`)
 	if err != nil {
 		fmt.Println(err)
 	}
-	var agents model.Agents
+	var agents types.Agents
 	json.Unmarshal(raw, &agents)
 	return agents
 }

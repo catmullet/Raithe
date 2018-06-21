@@ -1,9 +1,9 @@
-package services
+package registration
 
 import (
 	"github.com/labstack/echo"
 	"encoding/json"
-	"github.com/catmullet/Raithe/app/auth/model"
+	"github.com/catmullet/Raithe/app/types"
 	"fmt"
 	"crypto/rand"
 	"crypto/rsa"
@@ -11,15 +11,15 @@ import (
 )
 
 var (
-	RegisteredAgents []model.SecurityToken
+	RegisteredAgents []types.SecurityToken
 )
 
-func getAgents() model.Agents {
+func getAgents() types.Agents {
 	return utils.GetAgentsFromList()
 }
 
 func RegisterAsAgent(ctx echo.Context) error {
-	reg := model.Register{}
+	reg := types.Register{}
 	err := json.NewDecoder(ctx.Request().Body).Decode(&reg)
 
 	if err != nil {
@@ -29,21 +29,21 @@ func RegisterAsAgent(ctx echo.Context) error {
 	agents := getAgents()
 
 	if isAlreadyRegistered(reg.AgentName) {
-		return ctx.JSON(200, model.RegisterResponse{Success:false, Message:"Agent is already Registered"})
+		return ctx.JSON(200, types.RegisterResponse{Success:false, Message:"Agent is already Registered"})
 	}
 
 	for _, val := range agents.Agents {
 		if val == reg.AgentName {
 			token, _ := GeneratePrivateKey()
 
-			secToken := model.SecurityToken{AgentName:reg.AgentName,Token:token}
+			secToken := types.SecurityToken{AgentName:reg.AgentName,Token:token}
 			RegisteredAgents = append(RegisteredAgents, secToken)
 
-			return ctx.JSON(200, model.RegisterResponse{Success:true, SecurityToken:secToken})
+			return ctx.JSON(200, types.RegisterResponse{Success:true, SecurityToken:secToken})
 		}
 	}
 
-	return ctx.JSON(200, model.RegisterResponse{Success:false,Message:"Unrecognized Agent"})
+	return ctx.JSON(200, types.RegisterResponse{Success:false,Message:"Unrecognized Agent"})
 }
 
 
@@ -66,7 +66,7 @@ func GeneratePrivateKey() (string, error) {
 	return fmt.Sprintf("%x", privateKey.D.Bytes()), nil
 }
 
-func IsAgentRegistered(token model.SecurityToken) bool {
+func IsAgentRegistered(token types.SecurityToken) bool {
 
 	for _, val := range RegisteredAgents {
 		if val.Token == token.Token && val.AgentName == token.AgentName {
@@ -77,7 +77,7 @@ func IsAgentRegistered(token model.SecurityToken) bool {
 }
 
 func InvalidateTokens(ctx echo.Context) error {
-	inv := model.InvalidateTokens{}
+	inv := types.InvalidateTokens{}
 	err := ctx.Bind(&inv)
 
 	if err != nil {
@@ -85,14 +85,14 @@ func InvalidateTokens(ctx echo.Context) error {
 	}
 
 	if !IsAgentRegistered(inv.Token){
-		return ctx.JSON(403, model.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
+		return ctx.JSON(403, types.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
 	}
-	RegisteredAgents = []model.SecurityToken{}
+	RegisteredAgents = []types.SecurityToken{}
 	return ctx.JSON(200, "Invalidated Tokens")
 }
 
 func DumpTokens(ctx echo.Context) error {
-	inv := model.InvalidateTokens{}
+	inv := types.InvalidateTokens{}
 	err := ctx.Bind(&inv)
 
 	if err != nil {
@@ -100,7 +100,7 @@ func DumpTokens(ctx echo.Context) error {
 	}
 
 	if !IsAgentRegistered(inv.Token){
-		return ctx.JSON(403, model.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
+		return ctx.JSON(403, types.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
 	}
 
 	for _, val := range RegisteredAgents {

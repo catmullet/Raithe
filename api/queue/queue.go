@@ -2,16 +2,16 @@ package queue
 
 import (
 	"github.com/labstack/echo"
-	queue "github.com/catmullet/Raithe/app/queue/model"
 	"fmt"
 	"encoding/json"
-	auth "github.com/catmullet/Raithe/app/auth/model"
-	"github.com/catmullet/Raithe/app/auth/services"
+	"github.com/catmullet/Raithe/app/services/registration"
+	"github.com/catmullet/Raithe/app/types"
+	"github.com/catmullet/Raithe/app/services/cache"
 )
 
 func Push(ctx echo.Context) error {
 
-	msg := queue.Message{}
+	msg := types.Message{}
 
 	err := ctx.Bind(&msg)
 
@@ -19,17 +19,17 @@ func Push(ctx echo.Context) error {
 		fmt.Println(err)
 	}
 
-	if !services.IsAgentRegistered(msg.Token){
-		return ctx.JSON(403, auth.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
+	if !registration.IsAgentRegistered(msg.Token){
+		return ctx.JSON(403, types.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
 	}
 
-	go queue.PushToQueue(msg)
-	return ctx.JSON(200, queue.PushResponse{true})
+	go PushToQueue(msg)
+	return ctx.JSON(200, types.PushResponse{true})
 }
 
 func Pop(ctx echo.Context) error {
 
-	req := queue.PopRequest{}
+	req := types.PopRequest{}
 
 	err := ctx.Bind(&req)
 
@@ -37,21 +37,32 @@ func Pop(ctx echo.Context) error {
 		fmt.Println(err)
 	}
 
-	if !services.IsAgentRegistered(req.Token){
-		return ctx.JSON(403, auth.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
+	if !registration.IsAgentRegistered(req.Token){
+		return ctx.JSON(403, types.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
 	}
 
-	msg, err := queue.GetFromQueue(req.Queue)
+	msg, err := GetFromQueue(req.Queue)
 
-	data := queue.Message{}
+	data := types.Message{}
 
 	json.Unmarshal(msg, &data)
 
-	resp := queue.PopResponse{Message:data.Message, Queue:req.Queue}
+	resp := types.PopResponse{Message:data.Message, Queue:req.Queue}
 
 	if err != nil {
 		return err
 	}
 
 	return ctx.JSON(200, resp)
+}
+
+func PushToQueue(msg types.Message) error {
+	byteSlice, _ := json.Marshal(msg)
+
+	err := cache.Set(msg.Queue, byteSlice)
+	return err
+}
+
+func GetFromQueue(queue string) ([]byte, error) {
+	return cache.Get(queue)
 }
