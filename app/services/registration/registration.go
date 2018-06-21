@@ -18,6 +18,7 @@ func getAgents() types.Agents {
 	return utils.GetAgentsFromList()
 }
 
+/* Function to register an agent specified in the agents_list.json file. */
 func RegisterAsAgent(ctx echo.Context) error {
 	reg := types.Register{}
 	err := json.NewDecoder(ctx.Request().Body).Decode(&reg)
@@ -56,6 +57,7 @@ func isAlreadyRegistered(agentName string) bool {
 	return false
 }
 
+/* Returns key for the security token */
 func GeneratePrivateKey() (string, error) {
 	// Private Key generation
 	privateKey, err := rsa.GenerateKey(rand.Reader, 4096)
@@ -65,6 +67,7 @@ func GeneratePrivateKey() (string, error) {
 	return fmt.Sprintf("%x", privateKey.D.Bytes()), nil
 }
 
+/* Returns whether the agent has registered */
 func IsAgentRegistered(token types.SecurityToken) bool {
 
 	for _, val := range RegisteredAgents {
@@ -75,6 +78,7 @@ func IsAgentRegistered(token types.SecurityToken) bool {
 	return false
 }
 
+/* Invalidates the tokens for agents, requiring a new registration from agents. */
 func InvalidateTokens(ctx echo.Context) error {
 	inv := types.InvalidateTokens{}
 	err := ctx.Bind(&inv)
@@ -90,6 +94,7 @@ func InvalidateTokens(ctx echo.Context) error {
 	return ctx.JSON(200, "Invalidated Tokens")
 }
 
+/* Dumps all tokens to the console. */
 func DumpTokens(ctx echo.Context) error {
 	inv := types.InvalidateTokens{}
 	err := ctx.Bind(&inv)

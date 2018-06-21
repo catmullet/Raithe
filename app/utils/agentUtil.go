@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 )
 
+/* Returns list of agents specified in the agents_list.json file. */
 func GetAgentsFromList() types.Agents {
 	raw, err := ioutil.ReadFile(`./agents_list.json`)
 	if err != nil {
