@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-/* StartServer ... Starts the echo server on the specified port. */
+// StartServer Starts the echo server on the specified port.
 func StartServer() {
 
 	server := echo.New()

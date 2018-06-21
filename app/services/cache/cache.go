@@ -10,12 +10,12 @@ import (
 	"time"
 )
 
-/* Set ... Writes a message to file */
+// Set Writes a message to file
 func Set(key string, message []byte) error {
 	return writeFile(key, message)
 }
 
-/* Get ... Retrieves a message from file */
+// Get Retrieves a message from file
 func Get(queue string) ([]byte, error) {
 	return readFile(queue)
 }
