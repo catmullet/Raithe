@@ -45,9 +45,9 @@ Contained within the root directory is a file agents_list.json.  This file conta
 }
 ```
 
-### Push Message _/queue/push_
+### Push Message
 Pusing a message can be done by any agent.  Queues are the key and will be how agents identify which queue to pull from.
-#### Request
+#### Request _/queue/push_
 ```json
 {
 	"queue":"enrollment",
@@ -64,9 +64,9 @@ Pusing a message can be done by any agent.  Queues are the key and will be how a
     "success": true
 }
 ```
-### Pop Message _/queue/pop_
+### Pop Message
 Popping a message from the queue will grab the oldest message first.  Simple as that.
-#### Request
+#### Request _/queue/pop_
 ```json
 {
 	"queue":"enrollment",
