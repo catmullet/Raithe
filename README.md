@@ -1,4 +1,4 @@
-![Raithe](https://github.com/catmullet/Raithe/blob/master/image%20(1).jpg)
+![Raithe](https://github.com/catmullet/Raithe/blob/master/docs/banner.jpg)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/94e11fd3b812339047c5/maintainability)](https://codeclimate.com/github/catmullet/Raithe/maintainability)
 
