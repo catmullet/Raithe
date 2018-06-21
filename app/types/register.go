@@ -6,7 +6,7 @@ type Register struct {
 
 type SecurityToken struct {
 	AgentName string `json:"agent_name"`
-	Token string `json:"token"`
+	Token     string `json:"token"`
 }
 
 type InvalidateTokens struct {
@@ -14,13 +14,13 @@ type InvalidateTokens struct {
 }
 
 type RegisterResponse struct {
-	Success bool `json:"success"`
-	Message string `json:"message"`
+	Success       bool          `json:"success"`
+	Message       string        `json:"message"`
 	SecurityToken SecurityToken `json:"security_token"`
 }
 
 type ValidateResponse struct {
-	Success bool `json:"success"`
+	Success bool   `json:"success"`
 	Message string `json:"message"`
 }
 

@@ -1,10 +1,10 @@
 package utils
 
 import (
-	"fmt"
-	"io/ioutil"
 	"encoding/json"
+	"fmt"
 	"github.com/catmullet/Raithe/app/types"
+	"io/ioutil"
 )
 
 func GetAgentsFromList() types.Agents {

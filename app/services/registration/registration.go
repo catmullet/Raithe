@@ -1,13 +1,13 @@
 package registration
 
 import (
-	"github.com/labstack/echo"
-	"encoding/json"
-	"github.com/catmullet/Raithe/app/types"
-	"fmt"
 	"crypto/rand"
 	"crypto/rsa"
+	"encoding/json"
+	"fmt"
+	"github.com/catmullet/Raithe/app/types"
 	"github.com/catmullet/Raithe/app/utils"
+	"github.com/labstack/echo"
 )
 
 var (
@@ -29,23 +29,22 @@ func RegisterAsAgent(ctx echo.Context) error {
 	agents := getAgents()
 
 	if isAlreadyRegistered(reg.AgentName) {
-		return ctx.JSON(200, types.RegisterResponse{Success:false, Message:"Agent is already Registered"})
+		return ctx.JSON(200, types.RegisterResponse{Success: false, Message: "Agent is already Registered"})
 	}
 
 	for _, val := range agents.Agents {
 		if val == reg.AgentName {
 			token, _ := GeneratePrivateKey()
 
-			secToken := types.SecurityToken{AgentName:reg.AgentName,Token:token}
+			secToken := types.SecurityToken{AgentName: reg.AgentName, Token: token}
 			RegisteredAgents = append(RegisteredAgents, secToken)
 
-			return ctx.JSON(200, types.RegisterResponse{Success:true, SecurityToken:secToken})
+			return ctx.JSON(200, types.RegisterResponse{Success: true, SecurityToken: secToken})
 		}
 	}
 
-	return ctx.JSON(200, types.RegisterResponse{Success:false,Message:"Unrecognized Agent"})
+	return ctx.JSON(200, types.RegisterResponse{Success: false, Message: "Unrecognized Agent"})
 }
-
 
 func isAlreadyRegistered(agentName string) bool {
 	for _, val := range RegisteredAgents {
@@ -84,8 +83,8 @@ func InvalidateTokens(ctx echo.Context) error {
 		return err
 	}
 
-	if !IsAgentRegistered(inv.Token){
-		return ctx.JSON(403, types.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
+	if !IsAgentRegistered(inv.Token) {
+		return ctx.JSON(403, types.ValidateResponse{Success: false, Message: "Security Token Not Recognized"})
 	}
 	RegisteredAgents = []types.SecurityToken{}
 	return ctx.JSON(200, "Invalidated Tokens")
@@ -99,8 +98,8 @@ func DumpTokens(ctx echo.Context) error {
 		return err
 	}
 
-	if !IsAgentRegistered(inv.Token){
-		return ctx.JSON(403, types.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
+	if !IsAgentRegistered(inv.Token) {
+		return ctx.JSON(403, types.ValidateResponse{Success: false, Message: "Security Token Not Recognized"})
 	}
 
 	for _, val := range RegisteredAgents {

@@ -1,13 +1,13 @@
 package types
 
 type Message struct {
-	Queue   string              `json:"queue"`
-	Message interface{}         `json:"message"`
-	Token  SecurityToken `json:"security_token"`
+	Queue   string        `json:"queue"`
+	Message interface{}   `json:"message"`
+	Token   SecurityToken `json:"security_token"`
 }
 
 type PopRequest struct {
-	Queue string              `json:"queue"`
+	Queue string        `json:"queue"`
 	Token SecurityToken `json:"security_token"`
 }
 
@@ -16,6 +16,6 @@ type PushResponse struct {
 }
 
 type PopResponse struct {
-	Queue string `json:"queue"`
+	Queue   string      `json:"queue"`
 	Message interface{} `json:"message"`
 }

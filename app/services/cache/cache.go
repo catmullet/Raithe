@@ -1,13 +1,13 @@
 package cache
 
 import (
+	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
-	"time"
-	"fmt"
 	"path/filepath"
 	"strconv"
-	"io"
+	"time"
 )
 
 func Set(key string, message []byte) error {
@@ -21,14 +21,14 @@ func Get(queue string) ([]byte, error) {
 func writeFile(key string, message []byte) error {
 	createDirectory(key)
 	rootPath := os.Getenv("ROOTPATH")
-	return ioutil.WriteFile(rootPath + string(filepath.Separator) + key + string(filepath.Separator) + strconv.FormatInt(makeTimestamp(), 10), message,0777)
+	return ioutil.WriteFile(rootPath+string(filepath.Separator)+key+string(filepath.Separator)+strconv.FormatInt(makeTimestamp(), 10), message, 0777)
 }
 
 func readFile(key string) ([]byte, error) {
 	rootPath := os.Getenv("ROOTPATH")
 	msg := []byte{}
 
-	filepath.Walk(rootPath + string(filepath.Separator) + key + string(filepath.Separator), func(path string, f os.FileInfo, err error) error {
+	filepath.Walk(rootPath+string(filepath.Separator)+key+string(filepath.Separator), func(path string, f os.FileInfo, err error) error {
 		if !f.IsDir() {
 			m, err := ioutil.ReadFile(path)
 			if err != nil {
@@ -47,7 +47,7 @@ func readFile(key string) ([]byte, error) {
 func createDirectory(key string) {
 	rootPath := os.Getenv("ROOTPATH")
 	if _, err := os.Stat(rootPath + string(filepath.Separator) + key); os.IsNotExist(err) {
-		os.MkdirAll(rootPath + string(filepath.Separator) + key, 0777)
+		os.MkdirAll(rootPath+string(filepath.Separator)+key, 0777)
 	}
 }
 

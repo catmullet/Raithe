@@ -2,8 +2,8 @@ package bootstrap
 
 import (
 	"github.com/catmullet/Raithe/api/queue"
-	"os"
 	"github.com/labstack/echo"
+	"os"
 )
 
 func StartServer() {
