@@ -1,6 +1,6 @@
 ![Raithe](https://github.com/catmullet/Raithe/blob/master/image%20(1).jpg)
 
-<a href="https://codeclimate.com/github/catmullet/Raithe/maintainability"><img src="https://api.codeclimate.com/v1/badges/94e11fd3b812339047c5/maintainability" /></a>
+[![Maintainability](https://api.codeclimate.com/v1/badges/94e11fd3b812339047c5/maintainability)](https://codeclimate.com/github/catmullet/Raithe/maintainability)
 
 # _The Compact and Persistent Messaging Queue_
 ## Getting Started
