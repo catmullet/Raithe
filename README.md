@@ -1,5 +1,7 @@
 ![Raithe](https://github.com/catmullet/Raithe/blob/master/image%20(1).jpg)
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/94e11fd3b812339047c5/maintainability)](https://codeclimate.com/github/catmullet/Raithe/maintainability)
+
 # _The Compact and Persistent Messaging Queue_
 ## Getting Started
 #### Modifying your env file
@@ -67,12 +69,5 @@ Popping a message from the queue will grab the oldest message first.  Simple as 
 ```json
 {
     "queue": "enrollment",
-    "body": {
-        "message": "Hello World",
-        "queue": "enrollment",
-        "security_token": {
-        	"agent_name": "{{agent name}}",
-        	"token": "{{token}}"
-        }
-    }
+    "message": "Hello World"
 }
