@@ -1,7 +1,6 @@
 ![Raithe](https://github.com/catmullet/Raithe/blob/master/image%20(1).jpg)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/94e11fd3b812339047c5/maintainability)](https://codeclimate.com/github/catmullet/Raithe/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/94e11fd3b812339047c5/test_coverage)](https://codeclimate.com/github/catmullet/Raithe/test_coverage)
 
 # _The Compact and Persistent Messaging Queue_
 ## Getting Started
