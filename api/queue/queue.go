@@ -1,12 +1,12 @@
 package queue
 
 import (
-	"github.com/labstack/echo"
-	"fmt"
 	"encoding/json"
+	"fmt"
+	"github.com/catmullet/Raithe/app/services/cache"
 	"github.com/catmullet/Raithe/app/services/registration"
 	"github.com/catmullet/Raithe/app/types"
-	"github.com/catmullet/Raithe/app/services/cache"
+	"github.com/labstack/echo"
 )
 
 func Push(ctx echo.Context) error {
@@ -19,8 +19,8 @@ func Push(ctx echo.Context) error {
 		fmt.Println(err)
 	}
 
-	if !registration.IsAgentRegistered(msg.Token){
-		return ctx.JSON(403, types.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
+	if !registration.IsAgentRegistered(msg.Token) {
+		return ctx.JSON(403, types.ValidateResponse{Success: false, Message: "Security Token Not Recognized"})
 	}
 
 	go PushToQueue(msg)
@@ -37,8 +37,8 @@ func Pop(ctx echo.Context) error {
 		fmt.Println(err)
 	}
 
-	if !registration.IsAgentRegistered(req.Token){
-		return ctx.JSON(403, types.ValidateResponse{Success:false, Message:"Security Token Not Recognized"})
+	if !registration.IsAgentRegistered(req.Token) {
+		return ctx.JSON(403, types.ValidateResponse{Success: false, Message: "Security Token Not Recognized"})
 	}
 
 	msg, err := GetFromQueue(req.Queue)
@@ -47,7 +47,7 @@ func Pop(ctx echo.Context) error {
 
 	json.Unmarshal(msg, &data)
 
-	resp := types.PopResponse{Message:data.Message, Queue:req.Queue}
+	resp := types.PopResponse{Message: data.Message, Queue: req.Queue}
 
 	if err != nil {
 		return err

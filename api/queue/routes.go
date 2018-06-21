@@ -1,8 +1,8 @@
 package queue
 
 import (
-	"github.com/labstack/echo"
 	"github.com/catmullet/Raithe/app/services/registration"
+	"github.com/labstack/echo"
 )
 
 func Routes(e *echo.Echo) {
