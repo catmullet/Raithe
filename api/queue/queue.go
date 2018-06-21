@@ -9,7 +9,7 @@ import (
 	"github.com/labstack/echo"
 )
 
-//  Push Pushes message to specified queue. Requires security token.
+// Push Pushes message to specified queue. Requires security token.
 func Push(ctx echo.Context) error {
 
 	msg := types.Message{}

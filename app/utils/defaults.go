@@ -1,5 +1,6 @@
 package utils
 
+// Intro first screen intro
 const Intro = `
 ██████╗  █████╗ ██╗████████╗██╗  ██╗███████╗
 ██╔══██╗██╔══██╗██║╚══██╔══╝██║  ██║██╔════╝
