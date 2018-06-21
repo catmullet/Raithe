@@ -6,6 +6,8 @@ import (
 	"os"
 )
 
+/* This is the function to start the echo server on the specified port*/
+
 func StartServer() {
 
 	server := echo.New()
