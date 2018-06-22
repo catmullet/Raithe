@@ -7,10 +7,15 @@
 # _The Compact and Persistent Messaging Queue_
 ## Getting Started
 #### Modifying your env file
-Your env file simply contains the port you want to run from and the root path of where the persistent storage will be.
+Your env file simply contains the port you want to run from and the redis configuration.
 ```json
+# Essential Configurations
 PORT=8021
-ROOTPATH="q"
+
+# Redis
+REDIS_URL=127.0.0.1:6379
+REDIS_PASSWORD=""
+REDIS_DB=0
 ```
 #### Your Agents List
 Your agents list will contain all agents that can register as a "producer" or "consumer", both are the same to Raithe.
