@@ -64,7 +64,7 @@ Pusing a message can be done by any agent.  Queues are the key and will be how a
 #### Request _/queue/push_
 ```json
 {
-	"queue":"enrollment",
+	"queue":"test",
 	"message":"Hello World",
 	"security_token": {
         	"agent_name": "{{agent name}}",
@@ -83,7 +83,7 @@ Popping a message from the queue will grab the oldest message first.  Simple as 
 #### Request _/queue/pop_
 ```json
 {
-	"queue":"enrollment",
+	"queue":"test",
 	"security_token": {
         	"agent_name": "{{agent name}}",
         	"token": "{{token}}"
@@ -93,6 +93,6 @@ Popping a message from the queue will grab the oldest message first.  Simple as 
 #### Response
 ```json
 {
-    "queue": "enrollment",
+    "queue": "test",
     "message": "Hello World"
 }
