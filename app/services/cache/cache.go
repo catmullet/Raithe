@@ -2,10 +2,10 @@ package cache
 
 import (
 	"fmt"
+	"github.com/go-redis/redis"
 	"os"
 	"strconv"
 	"time"
-	"github.com/go-redis/redis"
 )
 
 var redisClient *redis.Client
@@ -20,9 +20,9 @@ func InitializeRedisClient() {
 	}
 
 	redisClient = redis.NewClient(&redis.Options{
-		Addr:os.Getenv("REDIS_URL"),
-		Password:os.Getenv("REDIS_PASSWORD"),
-		DB:db,
+		Addr:     os.Getenv("REDIS_URL"),
+		Password: os.Getenv("REDIS_PASSWORD"),
+		DB:       db,
 	})
 
 	ping, err := redisClient.Ping().Result()
@@ -43,12 +43,12 @@ func Get(queue string) ([]byte, error) {
 }
 
 func writeFile(key string, message []byte) error {
-	r := redisClient.Set(fmt.Sprintf("%v_%v", key, makeTimestamp()), message, 48 * time.Hour)
+	r := redisClient.Set(fmt.Sprintf("%v_%v", key, makeTimestamp()), message, 48*time.Hour)
 	return r.Err()
 }
 
 func readFile(key string) ([]byte, error) {
-	iter := redisClient.Scan(0, key + "_*",1).Iterator()
+	iter := redisClient.Scan(0, key+"_*", 1).Iterator()
 	iter.Next()
 
 	msg := []byte{}

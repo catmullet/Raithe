@@ -3,10 +3,10 @@ package main
 import (
 	"fmt"
 	"github.com/catmullet/Raithe/app/bootstrap"
+	"github.com/catmullet/Raithe/app/services/cache"
 	"github.com/catmullet/Raithe/app/utils"
 	"github.com/subosito/gotenv"
 	"os"
-	"github.com/catmullet/Raithe/app/services/cache"
 )
 
 func main() {
