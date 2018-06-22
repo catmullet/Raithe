@@ -2,13 +2,34 @@ package cache
 
 import (
 	"fmt"
-	"io"
-	"io/ioutil"
 	"os"
-	"path/filepath"
 	"strconv"
 	"time"
+	"github.com/go-redis/redis"
 )
+
+var redis_client *redis.Client
+
+func InitializeRedisClient() {
+	db, err := strconv.Atoi(os.Getenv("REDIS_DB"))
+
+	if err != nil {
+		fmt.Println("Failed to Get Redis DB Environment Variable.  Defaulting to 0")
+		db = 0
+	}
+
+	redis_client = redis.NewClient(&redis.Options{
+		Addr:os.Getenv("REDIS_URL"),
+		Password:os.Getenv("REDIS_PASSWORD"),
+		DB:db,
+	})
+
+	ping, err := redis_client.Ping().Result()
+
+	if err != nil {
+		fmt.Println("Failed to Initialize Redis, " + ping)
+	}
+}
 
 // Set Writes a message to file
 func Set(key string, message []byte) error {
@@ -21,36 +42,25 @@ func Get(queue string) ([]byte, error) {
 }
 
 func writeFile(key string, message []byte) error {
-	createDirectory(key)
-	rootPath := os.Getenv("ROOTPATH")
-	return ioutil.WriteFile(rootPath+string(filepath.Separator)+key+string(filepath.Separator)+strconv.FormatInt(makeTimestamp(), 10), message, 0777)
+	r := redis_client.Set(fmt.Sprintf("%v_%v", key, makeTimestamp()), message, 48 * time.Hour)
+	return r.Err()
 }
 
 func readFile(key string) ([]byte, error) {
-	rootPath := os.Getenv("ROOTPATH")
+	iter := redis_client.Scan(0, key + "_*",1).Iterator()
+	iter.Next()
+
 	msg := []byte{}
 
-	filepath.Walk(rootPath+string(filepath.Separator)+key+string(filepath.Separator), func(path string, f os.FileInfo, err error) error {
-		if !f.IsDir() {
-			m, err := ioutil.ReadFile(path)
-			if err != nil {
-				fmt.Println(err)
-			}
-			os.Remove(path)
-			msg = m
-			return io.EOF
-		}
-		return nil
-	})
+	if iter.Err() != nil {
+		return msg, iter.Err()
+	}
+
+	msg = []byte(redis_client.Get(iter.Val()).Val())
+
+	redis_client.Del(iter.Val())
 
 	return msg, nil
-}
-
-func createDirectory(key string) {
-	rootPath := os.Getenv("ROOTPATH")
-	if _, err := os.Stat(rootPath + string(filepath.Separator) + key); os.IsNotExist(err) {
-		os.MkdirAll(rootPath+string(filepath.Separator)+key, 0777)
-	}
 }
 
 func makeTimestamp() int64 {
