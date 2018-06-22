@@ -6,6 +6,10 @@
 
 # _The Compact and Persistent Messaging Queue_
 ## Getting Started
+#### Run Go Get
+```json
+go get github.com/catmullet/Raithe
+```
 #### Modifying your env file
 Your env file simply contains the port you want to run from and the redis configuration.
 ```json
