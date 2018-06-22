@@ -1,6 +1,5 @@
 # Essential Configurations
 PORT=8021
-ROOTPATH="q"
 
 # Redis
 REDIS_URL=127.0.0.1:6379
