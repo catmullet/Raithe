@@ -21,6 +21,11 @@ REDIS_URL=127.0.0.1:6379
 REDIS_PASSWORD=""
 REDIS_DB=0
 ```
+#### Fire It Up
+```json
+go run raithe.go
+```
+![Raithe](https://raw.githubusercontent.com/catmullet/Raithe/master/docs/img/Raithe_cmd.png)
 #### Your Agents List
 Your agents list will contain all agents that can register as a "producer" or "consumer", both are the same to Raithe.
 Contained within your agents_list.json of the root folder you will see something like this.  Just list the names of the agents and each agent will need to call the register path _(/auth/register)_ to stake thier claim on that agent name.
@@ -31,7 +36,6 @@ Contained within your agents_list.json of the root folder you will see something
   ]
 }
 ```
-
 ## Playing Around
 ### Register Clients
 A Client is any service attempting to push or pop from the message queue.  
