@@ -10,6 +10,7 @@ import (
 
 var redis_client *redis.Client
 
+// InitializeRedisClient Initializes the Redis Client from Environment variables.
 func InitializeRedisClient() {
 	db, err := strconv.Atoi(os.Getenv("REDIS_DB"))
 
