@@ -50,14 +50,13 @@ func Get(queue string) ([]byte, error) {
 
 // GetAgents Retrieves registered agents from Redis
 func GetAgents(key string) ([]byte, error) {
-
-	msg := []byte{}
-	msg = []byte(redisClient.Get(key).Val())
+	
+	msg := []byte(redisClient.Get(key).Val())
 
 	return msg, nil
 }
 
-// Invalidates Agents
+// InvalidateAgents Invalidates Agents
 func InvalidateAgents(key string) error {
 	r := redisClient.Set(fmt.Sprintf("%v", key), []byte{}, 120*time.Hour)
 	return r.Err()
