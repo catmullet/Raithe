@@ -37,9 +37,24 @@ func Set(key string, message []byte) error {
 	return writeFile(key, message)
 }
 
+// SetAgents Sets Agents on Redis
+func SetAgents(key string, message []byte) error {
+	r := redisClient.Set(fmt.Sprintf("%v", key), message, 120*time.Hour)
+	return r.Err()
+}
+
 // Get Retrieves a message from file
 func Get(queue string) ([]byte, error) {
 	return readFile(queue)
+}
+
+// GetAgents Retrieves registered agents from Redis
+func GetAgents(key string) ([]byte, error) {
+
+	msg := []byte{}
+	msg = []byte(redisClient.Get(key).Val())
+
+	return msg, nil
 }
 
 func writeFile(key string, message []byte) error {

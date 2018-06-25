@@ -5,17 +5,51 @@ import (
 	"crypto/rsa"
 	"encoding/json"
 	"fmt"
+	"github.com/catmullet/Raithe/app/services/cache"
 	"github.com/catmullet/Raithe/app/types"
 	"github.com/catmullet/Raithe/app/utils"
 	"github.com/labstack/echo"
 )
 
+const registeredAgentsKey = "reg_agents"
+
 var (
 	registeredAgents []types.SecurityToken
 )
 
+type RegisteredAgents struct {
+	Agents []types.SecurityToken
+}
+
 func getAgents() types.Agents {
 	return utils.GetAgentsFromList()
+}
+
+func getAgentsList() RegisteredAgents {
+
+	registeredAgents := RegisteredAgents{}
+	registeredAgentsList, err := cache.GetAgents(registeredAgentsKey)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	json.Unmarshal(registeredAgentsList, &registeredAgents)
+
+	return registeredAgents
+}
+
+func addAgent(scToken types.SecurityToken) {
+	current := getAgentsList()
+	current.Agents = append(current.Agents, scToken)
+
+	newList, err := json.Marshal(current)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	cache.SetAgents(registeredAgentsKey, newList)
 }
 
 // RegisterAsAgent Registers an agent specified in the agents_list.json file.
@@ -33,12 +67,17 @@ func RegisterAsAgent(ctx echo.Context) error {
 		return ctx.JSON(200, types.RegisterResponse{Success: false, Message: "Agent is already Registered"})
 	}
 
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	for _, val := range agents.Agents {
 		if val == reg.AgentName {
 			token, _ := GeneratePrivateKey()
 
 			secToken := types.SecurityToken{AgentName: reg.AgentName, Token: token}
-			registeredAgents = append(registeredAgents, secToken)
+
+			addAgent(secToken)
 
 			return ctx.JSON(200, types.RegisterResponse{Success: true, SecurityToken: secToken})
 		}
@@ -48,7 +87,9 @@ func RegisterAsAgent(ctx echo.Context) error {
 }
 
 func isAlreadyRegistered(agentName string) bool {
-	for _, val := range registeredAgents {
+	rAgents := getAgentsList()
+
+	for _, val := range rAgents.Agents {
 		if val.AgentName == agentName {
 			return true
 		}
@@ -70,7 +111,9 @@ func GeneratePrivateKey() (string, error) {
 // IsAgentRegistered Returns whether the agent has registered
 func IsAgentRegistered(token types.SecurityToken) bool {
 
-	for _, val := range registeredAgents {
+	rAgents := getAgentsList()
+
+	for _, val := range rAgents.Agents {
 		if val.Token == token.Token && val.AgentName == token.AgentName {
 			return true
 		}
