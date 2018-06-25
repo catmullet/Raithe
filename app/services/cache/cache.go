@@ -39,7 +39,7 @@ func Set(key string, message []byte) error {
 
 // SetAgents Sets Agents on Redis
 func SetAgents(key string, message []byte) error {
-	r := redisClient.Set(fmt.Sprintf("%v", key), message, 120*time.Hour)
+	r := redisClient.Set(fmt.Sprintf("%v", key), message, 0)
 	return r.Err()
 }
 
@@ -50,7 +50,7 @@ func Get(queue string) ([]byte, error) {
 
 // GetAgents Retrieves registered agents from Redis
 func GetAgents(key string) ([]byte, error) {
-	
+
 	msg := []byte(redisClient.Get(key).Val())
 
 	return msg, nil
