@@ -1,5 +1,6 @@
 ![Raithe](https://raw.githubusercontent.com/catmullet/Raithe/master/docs/img/banner.jpg)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/catmullet/Raithe/blob/master/LICENSE)
 [![Maintainability](https://api.codeclimate.com/v1/badges/94e11fd3b812339047c5/maintainability)](https://codeclimate.com/github/catmullet/Raithe/maintainability)
 [![Go Report Card](https://goreportcard.com/badge/github.com/catmullet/Raithe)](https://goreportcard.com/report/github.com/catmullet/Raithe)
 [![GoDoc](https://godoc.org/github.com/catmullet/Raithe?status.svg)](https://godoc.org/github.com/catmullet/Raithe)
@@ -64,7 +65,7 @@ Pusing a message can be done by any agent.  Queues are the key and will be how a
 #### Request _/queue/push_
 ```json
 {
-	"queue":"enrollment",
+	"queue":"test",
 	"message":"Hello World",
 	"security_token": {
         	"agent_name": "{{agent name}}",
@@ -83,7 +84,7 @@ Popping a message from the queue will grab the oldest message first.  Simple as 
 #### Request _/queue/pop_
 ```json
 {
-	"queue":"enrollment",
+	"queue":"test",
 	"security_token": {
         	"agent_name": "{{agent name}}",
         	"token": "{{token}}"
@@ -93,6 +94,6 @@ Popping a message from the queue will grab the oldest message first.  Simple as 
 #### Response
 ```json
 {
-    "queue": "enrollment",
+    "queue": "test",
     "message": "Hello World"
 }
