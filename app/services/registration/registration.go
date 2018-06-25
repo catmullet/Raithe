@@ -13,10 +13,7 @@ import (
 
 const registeredAgentsKey = "reg_agents"
 
-var (
-	registeredAgents []types.SecurityToken
-)
-
+// RegisteredAgents Struct Stores the registered agents in Redis
 type RegisteredAgents struct {
 	Agents []types.SecurityToken
 }
@@ -133,7 +130,8 @@ func InvalidateTokens(ctx echo.Context) error {
 	if !IsAgentRegistered(inv.Token) {
 		return ctx.JSON(403, types.ValidateResponse{Success: false, Message: "Security Token Not Recognized"})
 	}
-	registeredAgents = []types.SecurityToken{}
+
+	cache.InvalidateAgents(registeredAgentsKey)
 	return ctx.JSON(200, "Invalidated Tokens")
 }
 
@@ -150,7 +148,7 @@ func DumpTokens(ctx echo.Context) error {
 		return ctx.JSON(403, types.ValidateResponse{Success: false, Message: "Security Token Not Recognized"})
 	}
 
-	for _, val := range registeredAgents {
+	for _, val := range getAgentsList().Agents {
 		fmt.Println(val)
 	}
 	return ctx.JSON(200, "Tokens Have been dumped to logs")

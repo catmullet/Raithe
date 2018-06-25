@@ -57,6 +57,12 @@ func GetAgents(key string) ([]byte, error) {
 	return msg, nil
 }
 
+// Invalidates Agents
+func InvalidateAgents(key string) error {
+	r := redisClient.Set(fmt.Sprintf("%v", key), []byte{}, 120*time.Hour)
+	return r.Err()
+}
+
 func writeFile(key string, message []byte) error {
 	r := redisClient.Set(fmt.Sprintf("%v_%v", key, makeTimestamp()), message, 48*time.Hour)
 	return r.Err()
