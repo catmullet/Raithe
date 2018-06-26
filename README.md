@@ -1,6 +1,5 @@
 ![Raithe](https://raw.githubusercontent.com/catmullet/Raithe/master/docs/img/banner.jpg)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/catmullet/Raithe/blob/master/LICENSE)
 [![Maintainability](https://api.codeclimate.com/v1/badges/94e11fd3b812339047c5/maintainability)](https://codeclimate.com/github/catmullet/Raithe/maintainability)
 [![Go Report Card](https://goreportcard.com/badge/github.com/catmullet/Raithe)](https://goreportcard.com/report/github.com/catmullet/Raithe)
 [![GoDoc](https://godoc.org/github.com/catmullet/Raithe?status.svg)](https://godoc.org/github.com/catmullet/Raithe)
